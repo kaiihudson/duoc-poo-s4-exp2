@@ -1,0 +1,7 @@
+Zona 1;Comuna 1;1200;agricola;1000
+Zona 4;Comuna 4;300;agricola;400
+Zona 2;Comuna 1;1201;ganadero;100
+Zona 1;Comuna 2;800;agricola;300
+Zona 3;Comuna 3;5000;agricola;1000
+Zona 4;Comuna 2;12a;agricola;1000
+Zona 4;Comuna 3;120;aggricola;120
