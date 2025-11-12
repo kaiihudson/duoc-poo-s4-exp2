@@ -16,11 +16,11 @@ public class Main {
         for (Data datalet: data){
             System.out.println(datalet);
         }
-        // filtra segun una condicion
+        // filtra según una condición
         // prod > 1000
         List<Data> filteredByProduction = new ArrayList<>();
         for (Data filterProd: data){
-            if (filterProd.getProduccion() > 1000){
+            if (filterProd.getProduction() > 1000){
                 filteredByProduction.add(filterProd);
             }
         }

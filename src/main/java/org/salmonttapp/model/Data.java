@@ -3,14 +3,14 @@ package org.salmonttapp.model;
 public class Data {
     private String centroCultivo;
     private String comuna;
-    private int produccion;
+    private int production;
     private Type type;
     private int stock;
 
-    public Data(String centroCultivo, String comuna, int produccion, Type type, int stock) {
+    public Data(String centroCultivo, String comuna, int production, Type type, int stock) {
         this.centroCultivo = centroCultivo;
         this.comuna = comuna;
-        this.produccion = produccion;
+        this.production = production;
         this.type = type;
         this.stock = stock;
     }
@@ -31,12 +31,12 @@ public class Data {
         this.comuna = comuna;
     }
 
-    public int getProduccion() {
-        return produccion;
+    public int getProduction() {
+        return production;
     }
 
-    public void setProduccion(int produccion) {
-        this.produccion = produccion;
+    public void setProduction(int production) {
+        this.production = production;
     }
 
     public Type getType() {
@@ -59,7 +59,7 @@ public class Data {
     public String toString() {
         return "centroCultivo: '" + centroCultivo + '\'' +
                 ", comuna: '" + comuna + '\'' +
-                ", produccion: " + produccion +
+                ", produccion: " + production +
                 ", type: " + type.toString().toLowerCase() +
                 ", stock: " + stock;
     }

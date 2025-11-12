@@ -27,7 +27,7 @@ public class GestorDatos {
             File readFile = loadFile(filePath);
             try (Scanner reader = new Scanner(readFile)){
                 while  (reader.hasNextLine()){
-                    // leer archivo por linea
+                    // leer archivo por línea
                     String data = reader.nextLine();
                     // separar los datos con split
                     String[] dataParts = data.split(";");
@@ -39,7 +39,7 @@ public class GestorDatos {
                         production = Integer.parseInt(dataParts[2]);
                         stock = Integer.parseInt(dataParts[4]);
                     } catch (NumberFormatException e) {
-                        System.err.println("Error en valores numericos ingresados en linea: " + counter );
+                        System.err.println("Error en valores numéricos ingresados en linea: " + counter );
                         continue;
                     }
                     if (dataParts[3].equalsIgnoreCase("agricola")){
@@ -48,15 +48,15 @@ public class GestorDatos {
                         tipo = Type.GANADERO;
                     } else {
                         tipo = null;
-                        System.err.println("Tipo no soportado en linea " + counter);
+                        System.err.println("Tipo no soportado en linea: " + counter);
                     }
                     Data data1 = new Data(dataParts[0], dataParts[1], production, tipo, stock);
                     // almacena en un array list
-                    if (data1.getProduccion() == -1 || data1.getStock() == -1 || data1.getType() == null){
+                    if (data1.getProduction() == -1 || data1.getStock() == -1 || data1.getType() == null){
                         continue;
                     } else {
-                        if (data1.getProduccion() < data1.getStock()){
-                            System.err.println("Produccion < Stock en linea: " + counter);
+                        if (data1.getProduction() < data1.getStock()){
+                            System.err.println("Producción < Stock en linea: " + counter);
                             continue;
                         }
                         dataArray.add(data1);
@@ -69,7 +69,6 @@ public class GestorDatos {
         } catch (IllegalAccessException e) {
             System.err.println(e.getMessage());
         } catch (URISyntaxException e) {
-            System.err.println(e.getStackTrace());
             System.err.println("URI syntax error on " + filePath);
         }
         return dataArray;
