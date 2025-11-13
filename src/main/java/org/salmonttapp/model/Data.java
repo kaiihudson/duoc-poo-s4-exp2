@@ -1,5 +1,8 @@
 package org.salmonttapp.model;
 
+/**
+ * Data class to represent a row in the file to read
+ */
 public class Data {
     private String centroCultivo;
     private String comuna;
@@ -7,6 +10,13 @@ public class Data {
     private Type type;
     private int stock;
 
+    /**
+     * @param centroCultivo the "centro de cultivo" name
+     * @param comuna the "comuna" the "centro de cultivo" is at
+     * @param production the production number the "centro de cultivo" has
+     * @param type the type of production a "centro de cultivo" has
+     * @param stock the current stock a "centro de cultivo" has
+     */
     public Data(String centroCultivo, String comuna, int production, Type type, int stock) {
         this.centroCultivo = centroCultivo;
         this.comuna = comuna;

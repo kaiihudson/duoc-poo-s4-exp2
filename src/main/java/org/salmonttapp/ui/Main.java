@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args){
         GestorDatos gestor = new GestorDatos();
         // muestra todos los elementos
-        List<Data> data = gestor.readFromFile("data.txt");
+        List<Data> data = gestor.parseDataFromFile("data.txt");
         System.out.println("=".repeat(20));
         for (Data datalet: data){
             System.out.println(datalet);
