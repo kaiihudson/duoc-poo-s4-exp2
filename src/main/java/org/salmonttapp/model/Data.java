@@ -10,6 +10,9 @@ public class Data {
     private Type type;
     private int stock;
 
+    public Data() {
+    }
+
     /**
      * @param centroCultivo the "centro de cultivo" name
      * @param comuna the "comuna" the "centro de cultivo" is at

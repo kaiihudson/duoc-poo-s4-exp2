@@ -1,5 +1,6 @@
 package org.salmonttapp.data;
 
+import org.salmonttapp.data.exceptions.InvalidTypeException;
 import org.salmonttapp.model.Data;
 import org.salmonttapp.model.Type;
 
@@ -53,35 +54,28 @@ public class GestorDatos {
                     String[] dataParts = data.split(";");
                     if (dataParts.length == 5){
                         // crear objetos de esos datos
-                        int production = -1;
-                        int stock = -1;
-                        Type tipo;
+                        // creamos el dato
+                        Data data1 = new Data();
                         try {
-                            production = Integer.parseInt(dataParts[2]);
-                            stock = Integer.parseInt(dataParts[4]);
-                        } catch (NumberFormatException e) {
-                            System.err.println("Error en valores numéricos ingresados en linea: " + counter + ". Leyendo: Producción=" + dataParts[2] + " Stock=" + dataParts[4]);
+                            data1.setCentroCultivo(dataParts[0]);
+                            data1.setComuna(dataParts[1]);
+                            data1.setProduction(validateInteger(dataParts[2]));
+                            data1.setType(validateType(dataParts[3]));
+                            data1.setStock(validateInteger(dataParts[4]));
+                        } catch (NumberFormatException ex) {
+                            System.err.println("Valores numéricos erroneos en línea: " + counter);
+                            continue;
+                        } catch (InvalidTypeException ex) {
+                            System.err.println(ex.getMessage() + " en línea: " + counter);
                             continue;
                         }
-                        //TODO: this could be a switch if more cases are needed
-                        if (dataParts[3].equalsIgnoreCase("agricola")){
-                            tipo = Type.AGRICOLA;
-                        } else if (dataParts[3].equalsIgnoreCase("ganadero")) {
-                            tipo = Type.GANADERO;
-                        } else {
-                            tipo = null;
-                            System.err.println("Tipo no soportado en linea: " + counter + ". Leyendo: " + dataParts[3]);
-                        }
-                        // creamos el dato
-                        Data data1 = new Data(dataParts[0], dataParts[1], production, tipo, stock);
+
                         // almacena en un array list
-                        if ((data1.getProduction() != -1) && (data1.getStock() != -1) && (data1.getType() != null)) {
-                            if (data1.getProduction() < data1.getStock()){
-                                System.err.println("Producción < Stock en linea: " + counter);
-                                continue;
-                            }
-                            dataArray.add(data1);
+                        if (data1.getProduction() < data1.getStock()){
+                            System.err.println("Stock > Produccion en línea: " + counter);
+                            continue;
                         }
+                        dataArray.add(data1);
                     }
                 }
             } catch (FileNotFoundException e) {
@@ -93,5 +87,29 @@ public class GestorDatos {
             System.err.println("URI syntax error on " + filePath);
         }
         return dataArray;
+    }
+
+    /**
+     * Validation to translate type to enum.
+     * @param rawType string indicating the type
+     * @return type parsed by enum
+     * @throws InvalidTypeException if type is not added to this validation
+     */
+    public Type validateType(String rawType) throws InvalidTypeException {
+        return switch (rawType) {
+            case "agricola" -> Type.AGRICOLA;
+            case "ganadero" -> Type.GANADERO;
+            default -> throw new InvalidTypeException("Tipo no válido");
+        };
+    }
+
+    /**
+     * Validation to assure a number is a number and acts like a number
+     * @param rawNumber the string containing a suspected number
+     * @return the number in int format
+     * @throws NumberFormatException if the number does not parse
+     */
+    public int validateInteger(String rawNumber) throws NumberFormatException {
+        return Integer.parseInt(rawNumber);
     }
 }
