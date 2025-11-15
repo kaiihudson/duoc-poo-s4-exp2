@@ -76,6 +76,8 @@ public class GestorDatos {
                             continue;
                         }
                         dataArray.add(data1);
+                    } else {
+                        System.err.println("Linea no valida en: " + counter);
                     }
                 }
             } catch (FileNotFoundException e) {
