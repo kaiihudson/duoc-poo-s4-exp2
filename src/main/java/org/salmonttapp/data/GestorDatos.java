@@ -91,31 +91,36 @@ public class GestorDatos {
             return new File(resource.toURI());
         }
     }
-
     /**
      * Read data from an Excel file in filepath, adding parse checks for data purge
      * @param filePath the name of the file in the resources folder
      */
     public void parseDataFromExcelFile(String filePath){
-        int counterCol = 0;
-        int counterRow=0;
+
         try (FileInputStream fis = new FileInputStream(filePath)){
             XSSFWorkbook book = new XSSFWorkbook(fis);
             for (int i = 0; i < book.getNumberOfSheets(); i ++){
-                counterCol++;
                 XSSFSheet sheet = book.getSheetAt(i);
-                for (int si = 0; si < sheet.getLastRowNum(); i++) {
-                    counterRow++;
+                for (int si = 1; si <= sheet.getLastRowNum(); si++) {
+                    // validate cultivator
                     XSSFRow row = sheet.getRow(si);
                     String cultivatorName = row.getCell(0).getStringCellValue();
                     String cultivatorCommune = row.getCell(1).getStringCellValue();
-                    int production = (int) row.getCell(2).getNumericCellValue();
-                    String salmonType = row.getCell(3).getStringCellValue();
-                    int stock = (int) row.getCell(4).getNumericCellValue();
-                    // validate cultivator
                     Cultivator finalCultivator = getCultivator(cultivatorName, cultivatorCommune);
-                    // validate data
-                    addtoList(finalCultivator, production, salmonType, stock, filePath, counterRow, counterCol);
+                    try {
+                        // validate data
+                        int production = (int) row.getCell(2).getNumericCellValue();
+                        String salmonType = row.getCell(3).getStringCellValue();
+                        int stock = (int) row.getCell(4).getNumericCellValue();
+                        if (production < stock) {
+                            finalCultivator.addNewError(filePath, si+1);
+                        } else {
+                            addtoList(finalCultivator, production, salmonType, stock, filePath, si+1);
+                        }
+                    } catch (IllegalStateException e) {
+                        finalCultivator.addNewError(filePath, si+1);
+                        log.error("{} IllegalStateException: ", si, e);
+                    }
                 }
             }
         } catch (FileNotFoundException e) {
@@ -124,7 +129,6 @@ public class GestorDatos {
             log.error("IO Exception", e);
         }
     }
-
     /** Read data from a plain text file in filepath, adding parse checks for data purge
      * @param filePath the name of the file in the resources folder
      */
@@ -187,23 +191,18 @@ public class GestorDatos {
      * @param stock stock in value
      * @param filepath filepath reference for error logging
      * @param row row reference for error logging
-     * @param col column reference for error logging
      */
-    public void addtoList(Cultivator cult, int production, String type, int stock, String filepath, int row, int col){
-        if (production < stock){
-            return;
-        }
+    public void addtoList(Cultivator cult, int production, String type, int stock, String filepath, int row){
         SalmonType newType;
         try {
             newType = validateType(type);
         } catch (InvalidTypeException e){
-            cult.addNewError(filepath, row+col);
+            cult.addNewError(filepath, row);
             return;
         }
         Production prod1 = new Production(cult, production, newType, stock);
         dataArray.add(prod1);
     }
-
     /** Overloaded method to add to the production list
      * @param prod production object
      */

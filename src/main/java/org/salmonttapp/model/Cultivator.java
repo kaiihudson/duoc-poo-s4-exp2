@@ -40,8 +40,7 @@ public class Cultivator {
         }
     }
 
-    @Override
-    public String toString() {
+    public String printErrrors() {
         StringBuilder error = new StringBuilder();
         if (!errors.isEmpty()){
             for (String filename: errors.keySet()){
@@ -49,5 +48,10 @@ public class Cultivator {
             }
         }
         return "Centro de cultivo: " + name + ". En comuna: " + commune + ". " + error;
+    }
+
+    @Override
+    public String toString() {
+        return "Centro de cultivo: " + name + ". En comuna: " + commune + ". ";
     }
 }

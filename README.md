@@ -7,7 +7,7 @@
 - Sede: Online
 ---
 ## Descripción general del sistema.
-> Este proyecto corresponde a la evaluación formativa de la semana 4 experíencia 2, en el cual se solicita generar un sistema capaz de tomar un archivo txt, con data separada por ';'. La cual debe ser procesada para ser re-procesada por el programa (Aplicación de filtros)
+> Este proyecto corresponde a la evaluación sumativa de la semana 5 experíencia 2, en el cual se solicita generar un sistema capaz de tomar un archivo txt o csv o xlsx. La cual debe ser procesada para ser manejada por el programa (Aplicación de filtros)
 ---
 ## Estructura de Carpetas
 ```
@@ -16,17 +16,23 @@
 │       └───java
 │           └───org
 │               └───salmonttapp
-│                   ├───data
-│                   ├───model
-│                   └───ui
-└───resources (Contiene data.txt)
-
+│                   ├───data // includes data handlers
+│                   ├───model // includes models
+│                   └───ui // includes main invocation
+└───resources
+│    └───data.txt
+└───Book.xlsx
 ```
 ---
 ## HOW TO COMPILE / RUN
 
 1. Clonar este repositorio.
-2. Abrir este proyecto en un IDE java
-3. Ejecutar el archivo `Main.java` desde el paquete `app`
+2. Abrir este proyecto en un IDE java (JAVA 25)
+3. Ejecutar el archivo `Main.java` desde el paquete `ui`
 ---
-Fecha de entrega: 11/07/2025
+## DEPENDENCIES
+- apache-poi `5.4.0`
+- log4j-core `2.20.0`
+- log4j-api `2.20.0`
+---
+Fecha de entrega: 23/11/2025
